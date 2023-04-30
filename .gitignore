@@ -1,2 +1,4 @@
 /simulations/*/results
 /simulations/*/*.anf
+/simulations/*/.qtenvrc
+/simulations/external

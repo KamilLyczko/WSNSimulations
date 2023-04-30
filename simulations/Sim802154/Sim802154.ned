@@ -24,6 +24,7 @@ network Sim802154
         double serverX @unit(m) = default(gatewayX);
         double serverY @unit(m) = default(gatewayY + distFromServerToSink);
         double angleStep = 6.28/(sensorsType1Number + sensorsType2Number + sensorsType3Number);
+        bool enableVisualisation = default(true);
         @display("bgb=500,400");
     submodules:
         sensorType1[sensorsType1Number]: StarSensorNode {
@@ -54,6 +55,8 @@ network Sim802154
             @display("i=misc/sensorgateway");
             mobility.initialX = parent.gatewayX;
             mobility.initialY = parent.gatewayY;
+            
+            wlan[0].radio.displayCommunicationRange = parent.enableVisualisation;
         }
         server: StandardHost {
             @display("p=$serverX,$serverY");
@@ -63,6 +66,8 @@ network Sim802154
         }
         visualizer: <default(firstAvailableOrEmpty("IntegratedCanvasVisualizer"))> like IIntegratedVisualizer if typename != "" {
             @display("p=40,200");
+            mediumVisualizer.displaySignals = parent.enableVisualisation;
+            networkRouteVisualizer.displayRoutes = parent.enableVisualisation;
         }
         radioMedium: Ieee802154NarrowbandScalarRadioMedium {
             @display("p=40,260");
