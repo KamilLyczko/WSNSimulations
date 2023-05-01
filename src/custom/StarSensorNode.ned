@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package wsnsimulations.simulations.Sim802154.custom;
+package wsnsimulations.custom;
 
 import inet.node.inet.SensorNode;
 

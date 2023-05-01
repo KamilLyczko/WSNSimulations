@@ -1,16 +1,21 @@
-package wsnsimulations.simulations.Sim802154;
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+package wsnsimulations.simulations.SimWiFi;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.physicallayer.wireless.ieee802154.packetlevel.Ieee802154NarrowbandScalarRadioMedium;
+import inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.visualizer.contract.IIntegratedVisualizer;
 
-import wsnsimulations.custom.StarSensorNode;
-import inet.node.inet.SensorNode;
+import wsnsimulations.custom.StarAdhocHost;
+import inet.node.inet.AdhocHost;
 import inet.node.inet.StandardHost;
 import inet.node.ethernet.Eth100M;
 
-
-network Sim802154
+network SimWiFi
 {
     parameters:
         int sensorsTotalNumber = default(10);
@@ -27,7 +32,7 @@ network Sim802154
         bool enableVisualisation = default(true);
         @display("bgb=500,400");
     submodules:
-        sensorType1[sensorsType1Number]: StarSensorNode {
+        sensorType1[sensorsType1Number]: StarAdhocHost {
             @display("i=misc/sensor");
             //positionAngle = uniform(0,6.28);
             positionAngle = index*parent.angleStep; //index operator - Omnet doc 19.5.6
@@ -35,7 +40,7 @@ network Sim802154
             mobility.initialX = parent.gatewayX + distanceToSink*cos(positionAngle);
             mobility.initialY = parent.gatewayY + distanceToSink*sin(positionAngle);
         }
-        sensorType2[sensorsType2Number]: StarSensorNode {
+        sensorType2[sensorsType2Number]: StarAdhocHost {
             @display("i=misc/sensor2");
             //positionAngle = uniform(0,6.28);
             positionAngle = (index+parent.sensorsType1Number)*parent.angleStep;
@@ -43,7 +48,7 @@ network Sim802154
             mobility.initialX = parent.gatewayX + distanceToSink*cos(positionAngle);
             mobility.initialY = parent.gatewayY + distanceToSink*sin(positionAngle);
         }
-        sensorType3[sensorsType3Number]: StarSensorNode {
+        sensorType3[sensorsType3Number]: StarAdhocHost {
             @display("i=misc/sensor3");
             //positionAngle = uniform(0,6.28);
             positionAngle = (index+parent.sensorsType1Number+parent.sensorsType2Number)*parent.angleStep;
@@ -51,7 +56,7 @@ network Sim802154
             mobility.initialX = parent.gatewayX + distanceToSink*cos(positionAngle);
             mobility.initialY = parent.gatewayY + distanceToSink*sin(positionAngle);
         }
-        gateway: SensorNode {
+        gateway: AdhocHost {
             @display("i=misc/sensorgateway");
             mobility.initialX = parent.gatewayX;
             mobility.initialY = parent.gatewayY;
@@ -69,7 +74,7 @@ network Sim802154
             mediumVisualizer.displaySignals = parent.enableVisualisation;
             networkRouteVisualizer.displayRoutes = parent.enableVisualisation;
         }
-        radioMedium: Ieee802154NarrowbandScalarRadioMedium {
+        radioMedium: Ieee80211ScalarRadioMedium {
             @display("p=40,260");
         }
     connections:
