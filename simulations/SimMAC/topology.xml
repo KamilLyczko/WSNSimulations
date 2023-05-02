@@ -1,0 +1,19 @@
+<config>
+	<interface hosts="gateway" names="wlan0" address="10.0.0.1" network="10.0.0.0" netmask="255.255.255.128" metric="104167"/>
+	<interface hosts="sensor*" names="wlan0" address="10.0.0.x" network="10.0.0.0" netmask="255.255.255.128" metric="104167"/>
+	<interface hosts="gateway" names="eth0" address="10.0.0.129" network="10.0.0.128" netmask="255.255.255.128" metric="20"/>
+	<interface hosts="server" names="eth0" address="10.0.0.130" network="10.0.0.128" netmask="255.255.255.128" metric="20"/>
+	<multicast-group hosts="gateway" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   	<multicast-group hosts="server" interfaces="eth0" address="224.0.0.1"/>
+   	<wireless interfaces="sensorType1[*]%wlan0 sensorType2[*]%wlan0 sensorType3[*]%wlan0 gateway%wlan0"/>
+	<route hosts="sensor*" destination="*" netmask="*" gateway="10.0.0.1" interface="wlan0" metric="0"/>
+	<route hosts="gateway" destination="10.0.0.0" netmask="255.255.255.128" gateway="*" interface="wlan0" metric="0"/>
+	<route hosts="gateway" destination="10.0.0.0" netmask="255.255.255.128" gateway="*" interface="wlan0" metric="104167"/>
+	<route hosts="gateway" destination="10.0.0.128" netmask="255.255.255.128" gateway="*" interface="eth0" metric="0"/>
+	<route hosts="gateway" destination="10.0.0.128" netmask="255.255.255.128" gateway="*" interface="eth0" metric="20"/>
+	<route hosts="gateway" destination="127.0.0.0" netmask="255.0.0.0" gateway="*" interface="lo0" metric="1"/>
+	<route hosts="server" destination="10.0.0.128" netmask="255.255.255.128" gateway="*" interface="eth0" metric="0"/>
+	<route hosts="server" destination="10.0.0.128" netmask="255.255.255.128" gateway="*" interface="eth0" metric="20"/>
+	<route hosts="server" destination="127.0.0.0" netmask="255.0.0.0" gateway="*" interface="lo0" metric="1"/>
+	<route hosts="server" interface="eth0" destination="*" netmask="*" gateway="10.0.0.129"/>
+</config>
