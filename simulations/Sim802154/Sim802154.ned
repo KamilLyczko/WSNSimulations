@@ -1,14 +1,13 @@
 package wsnsimulations.simulations.Sim802154;
 
-import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.physicallayer.wireless.ieee802154.packetlevel.Ieee802154NarrowbandScalarRadioMedium;
-import inet.visualizer.contract.IIntegratedVisualizer;
-
 import wsnsimulations.custom.StarSensorNode;
 import inet.node.inet.SensorNode;
 import inet.node.inet.StandardHost;
 import inet.node.ethernet.Eth100M;
 
+import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
+import inet.physicallayer.wireless.ieee802154.packetlevel.Ieee802154NarrowbandScalarRadioMedium;
+import inet.visualizer.common.IntegratedVisualizer;
 
 network Sim802154
 {
@@ -64,10 +63,10 @@ network Sim802154
         configurator: Ipv4NetworkConfigurator {
             @display("p=40,140");
         }
-        visualizer: <default(firstAvailableOrEmpty("IntegratedCanvasVisualizer"))> like IIntegratedVisualizer if typename != "" {
+        visualizer: IntegratedVisualizer {
             @display("p=40,200");
-            mediumVisualizer.displaySignals = parent.enableVisualisation;
-            networkRouteVisualizer.displayRoutes = parent.enableVisualisation;
+            *.networkRouteVisualizer.displayRoutes = parent.enableVisualisation;
+            *.physicalLinkVisualizer.displayLinks = parent.enableVisualisation;
         }
         radioMedium: Ieee802154NarrowbandScalarRadioMedium {
             @display("p=40,260");
