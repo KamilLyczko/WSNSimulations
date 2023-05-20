@@ -1,6 +1,6 @@
 [General]
-last-configname=Sim802154
-last-runnumber=0
+last-configname=Sim802154_app1
+last-runnumber=3
 
 [RunModeProfiles]
 run-playback-speed=1
